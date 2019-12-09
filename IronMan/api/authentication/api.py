@@ -93,3 +93,32 @@ class AuthenticationApi:
 
         resource_path = "/v1/email/resendverify"
         return self._lr_object.execute("PUT", resource_path, query_parameters, body_parameters)
+    
+     def forgot(self, payload, resetPasswordUrl=None, emailTemplate=None):
+        """This API send a user a reset password email.
+        
+        Args:
+            payload: Model Class containing Definition of payload for Auth User Registration API
+            sott: IronMan Secured One Time Token
+            email_template: Email template name
+            fields: The fields parameter filters the API response so that the response only includes a specific set of fields
+            options: PreventVerificationEmail (Specifying this value prevents the verification email from being sent. Only applicable if you have the optional email verification flow)
+            verification_url: Email verification url
+		
+        Returns:
+            IsPosted true
+        17.1.1
+        """
+        if(payload is None):
+            raise Exception(self._lr_object.get_validation_message("payload"))
+
+
+        query_parameters = {}
+        query_parameters["apiKey"] = self._lr_object.get_api_key()
+        if(not self._lr_object.is_null_or_whitespace(emailTemplate)):
+            query_parameters["emailTemplate"] = emailTemplate
+        if(not self._lr_object.is_null_or_whitespace(resetPasswordUrl)):
+            query_parameters["resetPasswordUrl"] = resetPasswordUrl
+
+        resource_path = "/v1/password/forgot"
+        return self._lr_object.execute("POST", resource_path, query_parameters, payload)
