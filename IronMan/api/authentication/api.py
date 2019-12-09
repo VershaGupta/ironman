@@ -120,3 +120,59 @@ class AuthenticationApi:
 
         resource_path = "/v1/email/resendverify"
         return self._lr_object.execute("PUT", resource_path, query_parameters, body_parameters)
+
+ 
+    def reset_user_password(self, resetPasswordEmailTemplate, resetToken, password):
+        """This API reset a user's password.
+
+        Args:
+            resetPasswordEmailTemplate: The name of the template to be used to format the confirmation email sent to your user.
+            resetToken: The reset token retrieved from the recovery email previously sent to your user.
+            password: The new password to be used to authenticate your user.
+
+        Returns:
+            Response containing Definition of Reset user password
+        """
+
+        query_parameters = {}
+        query_parameters["apiKey"] = self._lr_object.get_api_key()
+
+        query_parameters = {}
+        query_parameters["resetPasswordEmailTemplate"] = resetPasswordEmailTemplate
+
+        body_parameters = {}
+        body_parameters["resetToken"] = resetToken
+
+        body_parameters = {}
+        body_parameters["password"] = password
+
+        resource_path = "/v1/password/reset"
+        return self._lr_object.execute("PUT", resource_path, query_parameters, body_parameters)
+
+
+    def change_user_password(self, access_token, oldPassword, newPassword):
+        """This API change a user's password.
+
+        Args:
+            access_token: A access token.
+            oldPassword: The current password used to authenticate your user.
+            newPassword: The new password to be used to authenticate your user.
+
+        Returns:
+            Response containing Definition of change user password
+        """
+
+        query_parameters = {}
+        query_parameters["apiKey"] = self._lr_object.get_api_key()
+
+        query_parameters = {}
+        query_parameters["access_token"] = access_token
+
+        body_parameters = {}
+        body_parameters["oldPassword"] = oldPassword
+
+        body_parameters = {}
+        body_parameters["newPassword"] = newPassword
+
+        resource_path = "/v1/password/change"
+        return self._lr_object.execute("PUT", resource_path, query_parameters, body_parameters)
