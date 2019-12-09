@@ -66,6 +66,33 @@ class AuthenticationApi:
         print (resource_path)
         
         return self._lr_object.execute("POST", resource_path, query_parameters, payload)
+		
+	def login(self, payload, verification_url=None, email_template=None):
+            """This API is used to login a user.
+            
+            Args:
+                payload: Model Class containing Definition of payload for Auth User Registration API
+                email_template: Email template name               
+                verification_url: Email verification url
+            
+            Returns:
+                Response containing Definition of Complete Validation, UserProfile data and Access Token
+            17.1.1
+            """
+            if(payload is None):
+                raise Exception(self._lr_object.get_validation_message("payload"))
+
+
+            query_parameters = {}
+            query_parameters["apiKey"] = self._lr_object.get_api_key()
+            if(not self._lr_object.is_null_or_whitespace(email_template)):
+                query_parameters["emailTemplate"] = email_template
+            if(not self._lr_object.is_null_or_whitespace(verification_url)):
+                query_parameters["verificationUrl"] = verification_url
+
+            resource_path = "/v1/login"      
+            
+            return self._lr_object.execute("POST", resource_path, query_parameters, payload)	
 
     
 
