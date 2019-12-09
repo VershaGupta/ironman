@@ -68,13 +68,12 @@ class AuthenticationApi:
         return self._lr_object.execute("POST", resource_path, query_parameters, payload)
 		
 	def login(self, payload, verification_url=None, email_template=None):
-            """This API creates a user in the database as well as sends a verification email to the user.
+            """This API is used to login a user.
             
             Args:
                 payload: Model Class containing Definition of payload for Auth User Registration API
                 email_template: Email template name               
                 verification_url: Email verification url
-				welcome_email_template: Name of the welcome email template
             
             Returns:
                 Response containing Definition of Complete Validation, UserProfile data and Access Token
